@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Potions</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="default_score">0</string>
+    <string name="negative_score_alert">Score couldn\'t be negative</string>
+    <string name="show_winner_menu_item">Show Winners</string>
+    <string name="clear_results_menu_item">Clear Results</string>
+    <string name="about_menu_item">About</string>
+    <string name="about_alert_title">About</string>
+    <string name="about_alert_message">About message here :)</string>
+    <string name="close_button_title">Close</string>
+    <string name="show_winner_dialog_title">Game Result</string>
+    <string name="clear_results_button_title">Clear Results</string>
+
+
+</resources>
