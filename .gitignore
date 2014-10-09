@@ -6,6 +6,8 @@
 
 #ignoring IDEA files
 *.iml
+**/*.iml
+.idea/
 
 # Files for the Dalvik VM
 *.dex
@@ -29,3 +31,5 @@ proguard/
 
 # Log Files
 *.log
+
+
