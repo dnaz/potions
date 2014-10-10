@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.shapes.RectShape;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -32,12 +30,22 @@ public class MyActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-
         fillScoreViewList((LinearLayout)findViewById(R.id.root_layout));
-
         mNegativeScoreAlert = Toast.makeText(this, getString(R.string.negative_score_alert), Toast.LENGTH_SHORT);
+        setLongClickListeners((LinearLayout)findViewById(R.id.root_layout));
     }
+    private void setLongClickListeners (LinearLayout rootView){
+        for (int i =0; i<rootView.getChildCount(); i++) {
+            LinearLayout layout = ((LinearLayout) rootView.getChildAt(i));
+            for (int j = 0; j<layout.getChildCount(); j++){
+               LinearLayout linearLayout = (LinearLayout) ((LinearLayout) layout.getChildAt(j)).getChildAt(1);
+                for (int k = 0; k<linearLayout.getChildCount(); k++){
+                    linearLayout.getChildAt(k).setOnLongClickListener(new OnLongClickListenerImpl());
+                }
+            }
+        }
 
+    }
     private void fillScoreViewList(LinearLayout rootView) {
         mScoreViews = new ArrayList<TextView>();
         for (int i =0; i<rootView.getChildCount(); i++) {
@@ -123,26 +131,35 @@ public class MyActivity extends Activity {
         }
     }
 
-    public void onButtonClick(View view) {
-        LinearLayout layout = (LinearLayout) view.getParent().getParent();
+    private TextView getTextViewByButton(Button button) {
+        LinearLayout layout = (LinearLayout) button.getParent().getParent();
         TextView textView = (TextView) layout.getChildAt(0);
+        return textView;
+    }
+
+    private void changeScore (View view, int val) {
 
         Button button = (Button) view;
+        TextView textView = getTextViewByButton(button);
         CharSequence operation = button.getText();
         int score = getScoreByTextView(textView);
         if (operation.equals("+")) {
-            score = score + 1;
+            score = score + val;
         } else {
             int defaultScore = Integer.valueOf(getString(R.string.default_score));
-            if (score != defaultScore) {
-                score = score - 1;
+            if (score - val >= defaultScore) {     //score must be always greater than default score
+                score = score - val;
             } else {
+                score = defaultScore;
                 showNegativeScoreAlert();
             }
         }
 
         textView.setText(String.valueOf(score));
+    }
 
+    public void onButtonClick(View view) {
+        changeScore(view, 1);
     }
 
     private void showNegativeScoreAlert() {
@@ -185,6 +202,15 @@ public class MyActivity extends Activity {
             int second = getScoreByTextView(b);
             return first < second ?
                     1 : first > second ? -1 : 0;
+        }
+    }
+
+    private class OnLongClickListenerImpl implements View.OnLongClickListener{
+
+        @Override
+        public boolean onLongClick(View view) {
+            changeScore(view, 10);
+            return true;
         }
     }
 

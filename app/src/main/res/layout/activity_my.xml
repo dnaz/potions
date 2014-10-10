@@ -63,7 +63,8 @@
                         android:text="+"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -73,7 +74,8 @@
                         android:text="-"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -113,7 +115,8 @@
                         android:text="+"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -123,7 +126,8 @@
                         android:text="-"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
                 </LinearLayout>
 
 
@@ -175,7 +179,8 @@
                         android:text="+"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -185,7 +190,8 @@
                         android:text="-"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
                 </LinearLayout>
 
 
@@ -227,7 +233,8 @@
                         android:text="+"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -237,7 +244,8 @@
                         android:text="-"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
                 </LinearLayout>
 
 
@@ -286,7 +294,8 @@
                         android:text="+"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -296,7 +305,8 @@
                         android:text="-"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -337,7 +347,8 @@
                         android:text="+"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
 
                     <Button
                         style="?android:attr/buttonStyleSmall"
@@ -347,7 +358,8 @@
                         android:text="-"
                         android:onClick="onButtonClick"
                         android:textSize="24dp"
-                        android:padding="5dp" />
+                        android:padding="5dp"
+                        android:longClickable="true" />
                 </LinearLayout>
 
             </LinearLayout>
