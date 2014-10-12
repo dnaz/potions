@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/editText"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:textSize="24dp" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:gravity="center"
+            android:text="@string/default_score"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:clickable="true"
+            android:textColor="#ffffffff"
+            android:background="#ff000000"
+            android:textSize="48dp"
+            android:id="@+id/textView3"
+            android:layout_below="@+id/editText"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_weight="0.5"
+            android:text="+"
+            android:onClick="onButtonClick"
+            android:textSize="24dp"
+            android:padding="5dp"
+            android:longClickable="true"
+            android:id="@+id/button3"
+            android:layout_alignTop="@+id/textView3"
+            android:layout_toRightOf="@+id/textView3"
+            android:layout_toEndOf="@+id/textView3" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_weight="0.5"
+            android:text="-"
+            android:onClick="onButtonClick"
+            android:textSize="24dp"
+            android:padding="5dp"
+            android:longClickable="true"
+            android:id="@+id/button4"
+            android:layout_toEndOf="@+id/textView3"
+            android:layout_toRightOf="@+id/textView3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
