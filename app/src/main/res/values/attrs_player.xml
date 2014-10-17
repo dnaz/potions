@@ -1,8 +1,7 @@
 <resources>
-    <declare-styleable name="Player">
-        <attr name="exampleString" format="string" />
-        <attr name="exampleDimension" format="dimension" />
-        <attr name="exampleColor" format="color" />
-        <attr name="exampleDrawable" format="color|reference" />
+    <declare-styleable name="PlayerView">
+        <attr name="playerName" format="string" />
+        <attr name="playerColor" format="color" />
+        <attr name="playerFontColor" format="color" />
     </declare-styleable>
 </resources>

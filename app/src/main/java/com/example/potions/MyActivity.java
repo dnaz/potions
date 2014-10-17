@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,41 +22,21 @@ import java.util.List;
 
 public class MyActivity extends Activity {
 
-    private Toast mNegativeScoreAlert;
-    private List<TextView> mScoreViews;
+    private static final List<Integer> playerIds = new ArrayList<Integer>();
+
+    static {
+        playerIds.add(R.id.player1);
+        playerIds.add(R.id.player2);
+        playerIds.add(R.id.player3);
+        playerIds.add(R.id.player4);
+        playerIds.add(R.id.player5);
+        playerIds.add(R.id.player6);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
-        fillScoreViewList((LinearLayout)findViewById(R.id.root_layout));
-        mNegativeScoreAlert = Toast.makeText(this, getString(R.string.negative_score_alert), Toast.LENGTH_SHORT);
-        setLongClickListeners((LinearLayout)findViewById(R.id.root_layout));
-    }
-    private void setLongClickListeners (LinearLayout rootView){
-        for (int i =0; i<rootView.getChildCount(); i++) {
-            LinearLayout layout = ((LinearLayout) rootView.getChildAt(i));
-            for (int j = 0; j<layout.getChildCount(); j++){
-               LinearLayout linearLayout = (LinearLayout) ((LinearLayout) layout.getChildAt(j)).getChildAt(1);
-                for (int k = 0; k<linearLayout.getChildCount(); k++){
-                    linearLayout.getChildAt(k).setOnLongClickListener(new OnLongClickListenerImpl());
-                }
-            }
-        }
-
-    }
-    private void fillScoreViewList(LinearLayout rootView) {
-        mScoreViews = new ArrayList<TextView>();
-        for (int i =0; i<rootView.getChildCount(); i++) {
-            LinearLayout layout = ((LinearLayout) rootView.getChildAt(i));
-            for (int j = 0; j<layout.getChildCount(); j++){
-                mScoreViews.add(getTextView(layout.getChildAt(j)));
-            }
-        }
-    }
-
-    private TextView getTextView(View view) {
-      return  (TextView) ((LinearLayout) view).getChildAt(0);
     }
 
 
@@ -97,7 +76,7 @@ public class MyActivity extends Activity {
         LinearLayout rootLayout = new LinearLayout(this);
         rootLayout.setGravity(Gravity.CENTER);
         rootLayout.setOrientation(LinearLayout.HORIZONTAL);
-        rootLayout.setPadding(0,30,0,0);
+        rootLayout.setPadding(0, 30, 0, 0);
 
         TextView winnersTextView = new TextView(this);
         winnersTextView.setText("Winner(s): ");
@@ -107,16 +86,13 @@ public class MyActivity extends Activity {
         LinearLayout winnersLayout = new LinearLayout(this);
         winnersLayout.setOrientation(LinearLayout.HORIZONTAL);
         winnersLayout.setBackgroundColor(Color.GRAY);
-        for(TextView winner: findWinners()) {
+        for (Integer winnerColor : findWinnerColors()) {
             TextView textView = new TextView(this);
             textView.setWidth(32);
             textView.setHeight(32);
             textView.setBackgroundResource(R.drawable.backtext);
 
-            ColorDrawable cd = (ColorDrawable) winner.getBackground();
-            int colorCode = cd.getColor();
-
-            textView.setBackgroundColor(colorCode);
+            textView.setBackgroundColor(winnerColor);
             winnersLayout.addView(textView);
         }
 
@@ -125,66 +101,30 @@ public class MyActivity extends Activity {
     }
 
     private void resetScores() {
-        String defaultScore = getString(R.string.default_score);
-        for (TextView textView : mScoreViews) {
-            textView.setText(defaultScore);
+        for (Integer playerId : playerIds) {
+            ((PlayerView) (findViewById(playerId))).resetScore();
         }
     }
 
-    private TextView getTextViewByButton(Button button) {
-        LinearLayout layout = (LinearLayout) button.getParent().getParent();
-        TextView textView = (TextView) layout.getChildAt(0);
-        return textView;
-    }
+    private List<Integer> findWinnerColors() {
 
-    private void changeScore (View view, int val) {
-
-        Button button = (Button) view;
-        TextView textView = getTextViewByButton(button);
-        CharSequence operation = button.getText();
-        int score = getScoreByTextView(textView);
-        if (operation.equals("+")) {
-            score = score + val;
-        } else {
-            int defaultScore = Integer.valueOf(getString(R.string.default_score));
-            if (score - val >= defaultScore) {     //score must be always greater than default score
-                score = score - val;
-            } else {
-                score = defaultScore;
-                showNegativeScoreAlert();
+        List<PlayerView> allPlayerViews = new ArrayList<PlayerView>();
+        for (Integer playerId : playerIds) {
+            allPlayerViews.add((PlayerView) findViewById(playerId));
+        }
+        Collections.sort(allPlayerViews, new ScoreComparator());
+        List<Integer> winnerColors = new ArrayList<Integer>();
+        int maxScore = allPlayerViews.get(0).getScore();
+        for (PlayerView playerView : allPlayerViews) {
+            if (playerView.getScore() == maxScore) {
+                winnerColors.add(playerView.getPlayerColor());
             }
         }
 
-        textView.setText(String.valueOf(score));
+
+        return winnerColors;
     }
 
-    public void onButtonClick(View view) {
-        changeScore(view, 1);
-    }
-
-    private void showNegativeScoreAlert() {
-        if (!mNegativeScoreAlert.getView().isShown()) {
-            mNegativeScoreAlert.show();
-        }
-    }
-
-    private List<TextView> findWinners() {
-        Collections.sort(mScoreViews, new ScoreTextViewComparator());
-        int maxResult = getScoreByTextView(mScoreViews.get(0));
-        List<TextView> maxScores = new ArrayList<TextView>();
-        for (TextView textView : mScoreViews) {
-            if (getScoreByTextView(textView) == maxResult) {
-                maxScores.add(textView);
-            } else {
-                break;
-            }
-        }
-        return maxScores;
-    }
-
-    private static int getScoreByTextView(TextView textView) {
-        return Integer.valueOf(textView.getText().toString());
-    }
 
     private class ResetListener implements DialogInterface.OnClickListener {
 
@@ -194,23 +134,14 @@ public class MyActivity extends Activity {
         }
     }
 
-    private static class ScoreTextViewComparator implements Comparator<TextView> {
+    private static class ScoreComparator implements Comparator<PlayerView> {
 
         @Override
-        public int compare(TextView a, TextView b) {
-            int first = getScoreByTextView(a);
-            int second = getScoreByTextView(b);
+        public int compare(PlayerView a, PlayerView b) {
+            int first = a.getScore();
+            int second = b.getScore();
             return first < second ?
                     1 : first > second ? -1 : 0;
-        }
-    }
-
-    private class OnLongClickListenerImpl implements View.OnLongClickListener{
-
-        @Override
-        public boolean onLongClick(View view) {
-            changeScore(view, 10);
-            return true;
         }
     }
 

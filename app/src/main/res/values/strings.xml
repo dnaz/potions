@@ -13,6 +13,8 @@
     <string name="close_button_title">Close</string>
     <string name="show_winner_dialog_title">Game Result</string>
     <string name="clear_results_button_title">Clear Results</string>
+    <string name="plus_label">+</string>
+    <string name="minus_label">-</string>
 
 
 </resources>

@@ -1,23 +1,25 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:style="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffe1e1e1"
+    android:clickable="false"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MyActivity"
-    android:background="#ffe1e1e1"
-    android:clickable="false">
+    tools:context=".MyActivity">
 
     <LinearLayout
         android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="3"
         android:baselineAligned="true"
-        android:clickable="false">
+        android:clickable="false"
+        android:orientation="vertical"
+        android:weightSum="3">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -26,112 +28,31 @@
             android:orientation="horizontal"
             android:weightSum="1">
 
-            <LinearLayout
+            <com.example.potions.PlayerView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
+                android:padding="5dp"
                 android:weightSum="1"
-                android:baselineAligned="false"
-                android:padding="5dp">
+                android:id="@+id/player1"
+                style:playerColor="@android:color/black"
+                style:playerFontColor="@android:color/white">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75"
-                    android:gravity="center"
-                    android:text="@string/default_score"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:clickable="true"
-                    android:textColor="#ffffffff"
-                    android:background="#ff000000"
-                    android:textSize="48dp"
-                    android:id="@+id/score1" />
+            </com.example.potions.PlayerView>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <Button
-                        style="@style/AppTheme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="+"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="-"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.example.potions.PlayerView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
+                android:padding="5dp"
                 android:weightSum="1"
-                android:padding="5dp">
+                android:id="@+id/player2"
+                style:playerColor="@android:color/white"
+                style:playerFontColor="@android:color/black">
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75"
-                    android:gravity="center"
-                    android:text="@string/default_score"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textSize="48dp"
-                    android:background="#FFFFFF"
-                    android:textColor="#000000"
-                    android:id="@+id/score2" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="+"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="-"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-                </LinearLayout>
-
-
-            </LinearLayout>
+            </com.example.potions.PlayerView>
 
         </LinearLayout>
 
@@ -141,115 +62,32 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <com.example.potions.PlayerView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
+                android:padding="5dp"
+                style:playerColor="#ff0000ff"
+                style:playerFontColor="#ffffff00"
                 android:weightSum="1"
-                android:baselineAligned="true"
-                android:padding="5dp">
+                android:id="@+id/player3">
 
+            </com.example.potions.PlayerView>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75"
-                    android:gravity="center"
-                    android:text="@string/default_score"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:autoText="false"
-                    android:background="#0000FF"
-                    android:textColor="#FFFF00"
-                    android:textSize="48dp"
-                    android:id="@+id/score3" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="+"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="-"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.example.potions.PlayerView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
+                android:padding="5dp"
                 android:weightSum="1"
-                android:padding="5dp">
+                android:id="@+id/player4"
+                style:playerColor="#ffffff00"
+                style:playerFontColor="#ff0000ff">
 
+            </com.example.potions.PlayerView>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75"
-                    android:gravity="center"
-                    android:text="@string/default_score"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:background="#FFFF00"
-                    android:textSize="48dp"
-                    android:textColor="#0000FF"
-                    android:id="@+id/score4" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="+"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="-"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-                </LinearLayout>
-
-
-            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -258,111 +96,31 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <com.example.potions.PlayerView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
+                android:padding="5dp"
                 android:weightSum="1"
-                android:padding="5dp">
+                android:id="@+id/player5"
+                style:playerColor="#ffff0000"
+                style:playerFontColor="#ffffffff">
 
+            </com.example.potions.PlayerView>
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75"
-                    android:gravity="center"
-                    android:text="@string/default_score"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:background="#FF0000"
-                    android:textColor="#FFFFFF"
-                    android:textSize="48dp"
-                    android:id="@+id/score5" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="+"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="-"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <com.example.potions.PlayerView
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.5"
                 android:orientation="horizontal"
+                android:padding="5dp"
                 android:weightSum="1"
-                android:padding="5dp">
+                android:id="@+id/player6"
+                style:playerColor="#ff00a700"
+                style:playerFontColor="#ffffffff">
 
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75"
-                    android:gravity="center"
-                    android:text="@string/default_score"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:background="#00FF00"
-                    android:textSize="48dp"
-                    android:textColor="#FFFFFF"
-                    android:id="@+id/score6" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.25"
-                    android:orientation="vertical"
-                    android:weightSum="1">
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="+"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-
-                    <Button
-                        style="?android:attr/buttonStyleSmall"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="-"
-                        android:onClick="onButtonClick"
-                        android:textSize="24dp"
-                        android:padding="5dp"
-                        android:longClickable="true" />
-                </LinearLayout>
-
-            </LinearLayout>
+            </com.example.potions.PlayerView>
 
         </LinearLayout>
 
