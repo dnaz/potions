@@ -19,6 +19,8 @@
     <string name="reset_score_message">Are you sure?</string>
     <string name="yes_title">Yep</string>
     <string name="no_title">Nope</string>
+    <string name="set_player_name_title">Set Player Name</string>
+    <string name="ok_button_label">OK</string>
 
 
 </resources>

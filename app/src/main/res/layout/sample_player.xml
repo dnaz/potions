@@ -21,7 +21,8 @@
             android:gravity="center"
             android:text="@string/default_score"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="0dp"

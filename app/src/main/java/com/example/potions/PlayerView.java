@@ -1,26 +1,29 @@
 package com.example.potions;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-/**
- * TODO: document your custom view class.
- */
 public class PlayerView extends RelativeLayout {
 
     private Toast mNegativeScoreAlert;
 
-    private String mPlayerName = "Player: \n";
+    private Integer mScore = 0;
+    private String mPlayerName = "Player";
     private int mPlayerColor = Color.BLACK;
     private int mPlayerFontColor = Color.WHITE;
 
@@ -47,9 +50,9 @@ public class PlayerView extends RelativeLayout {
 
         mNegativeScoreAlert = Toast.makeText(getContext(), getContext().getString(R.string.negative_score_alert), Toast.LENGTH_SHORT);
 
-        findViewById(R.id.buttonPlus).setOnLongClickListener(new OnLongClickListenerImpl());
+        findViewById(R.id.buttonPlus).setOnLongClickListener(new OnButtonLongClickListenerImpl());
         findViewById(R.id.buttonPlus).setOnClickListener(new OnClickListenerImpl());
-        findViewById(R.id.buttonMinus).setOnLongClickListener(new OnLongClickListenerImpl());
+        findViewById(R.id.buttonMinus).setOnLongClickListener(new OnButtonLongClickListenerImpl());
         findViewById(R.id.buttonMinus).setOnClickListener(new OnClickListenerImpl());
 
         final TypedArray a = getContext().obtainStyledAttributes(
@@ -58,13 +61,19 @@ public class PlayerView extends RelativeLayout {
         mPlayerName = a.getString(R.styleable.PlayerView_playerName) == null ? "player" : a.getString(R.styleable.PlayerView_playerName);
         mPlayerColor = a.getColor(R.styleable.PlayerView_playerColor, mPlayerColor);
         mPlayerFontColor = a.getColor(R.styleable.PlayerView_playerFontColor, mPlayerFontColor);
-        TextView textView = (TextView) findViewById(R.id.scoreTextView);
-        textView.setText(buildPlayerScoreText(getContext().getString(R.string.default_score)));
+        mScore = Integer.valueOf(getContext().getString(R.string.default_score));
+        TextView textView = resetTextView();
         textView.setBackgroundColor(mPlayerColor);
         textView.setTextColor(mPlayerFontColor);
-
+        textView.setOnLongClickListener(new OnTextViewLongClickListenerImpl());
         a.recycle();
 
+    }
+
+    private TextView resetTextView() {
+        TextView textView = (TextView) findViewById(R.id.scoreTextView);
+        textView.setText(buildPlayerScoreText());
+        return textView;
     }
 
     public int getPlayerColor() {
@@ -120,47 +129,40 @@ public class PlayerView extends RelativeLayout {
         }
     }
 
-    private static int getScoreByTextView(TextView textView) {
-        return Integer.valueOf(textView.getText().toString().split("\n")[1]);
-    }
-
 
     private void changeScore(View view, int val) {
 
         Button button = (Button) view;
-        TextView textView = (TextView) findViewById(R.id.scoreTextView);
         CharSequence operation = button.getText();
-        int score = getScoreByTextView(textView);
         if (operation.equals("+")) {
-            score = score + val;
+            mScore = mScore + val;
         } else {
             int defaultScore = Integer.valueOf(getContext().getString(R.string.default_score));
-            if (score - val >= defaultScore) {     //score must be always greater than default score
-                score = score - val;
+            if (mScore - val >= defaultScore) {     //mScore must be always greater than default mScore
+                mScore = mScore - val;
             } else {
-                score = defaultScore;
+                mScore = defaultScore;
                 showNegativeScoreAlert();
             }
         }
 
-        textView.setText(buildPlayerScoreText(String.valueOf(score)));
+        resetTextView();
     }
 
     public Integer getScore() {
-        TextView textView = (TextView) findViewById(R.id.scoreTextView);
-        return getScoreByTextView(textView);
+        return mScore;
     }
 
     public void resetScore() {
-        TextView textView = (TextView) findViewById(R.id.scoreTextView);
-        textView.setText(buildPlayerScoreText(getContext().getString(R.string.default_score)));
+        mScore = Integer.valueOf(getContext().getString(R.string.default_score));
+        resetTextView();
     }
 
-    private String buildPlayerScoreText(String score) {
-        return mPlayerName + '\n' + score;
+    private String buildPlayerScoreText() {
+        return mPlayerName + '\n' + mScore;
     }
 
-    private class OnLongClickListenerImpl implements View.OnLongClickListener {
+    private class OnButtonLongClickListenerImpl implements View.OnLongClickListener {
 
         @Override
         public boolean onLongClick(View view) {
@@ -174,6 +176,30 @@ public class PlayerView extends RelativeLayout {
         @Override
         public void onClick(View view) {
             changeScore(view, 1);
+        }
+    }
+
+    private class OnTextViewLongClickListenerImpl implements View.OnLongClickListener {
+
+        @Override
+        public boolean onLongClick(View view) {
+            final EditText editText = new EditText(view.getContext());
+            editText.setText(mPlayerName);
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
+            editText.setSelectAllOnFocus(true);
+            new AlertDialog.Builder(view.getContext())
+                    .setTitle(R.string.set_player_name_title)
+                    .setView(editText)
+                    .setPositiveButton(R.string.close_button_title, null)
+                    .setNegativeButton(R.string.ok_button_label, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            mPlayerName = editText.getText().toString();
+                            resetTextView();
+                        }
+                    })
+                    .show();
+            return true;
         }
     }
 }
