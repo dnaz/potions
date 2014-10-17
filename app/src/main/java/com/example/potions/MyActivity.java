@@ -101,9 +101,21 @@ public class MyActivity extends Activity {
     }
 
     private void resetScores() {
-        for (Integer playerId : playerIds) {
-            ((PlayerView) (findViewById(playerId))).resetScore();
-        }
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.reset_score_dialog_title)
+                .setMessage(getString(R.string.reset_score_message))
+                .setNegativeButton(R.string.yes_title, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        for (Integer playerId : playerIds) {
+                            ((PlayerView) (findViewById(playerId))).resetScore();
+                        }
+                    }
+                }
+                )
+                .setPositiveButton(R.string.no_title, null)
+                .show();
+
     }
 
     private List<Integer> findWinnerColors() {

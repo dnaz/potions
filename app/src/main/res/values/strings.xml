@@ -15,6 +15,10 @@
     <string name="clear_results_button_title">Clear Results</string>
     <string name="plus_label">+</string>
     <string name="minus_label">-</string>
+    <string name="reset_score_dialog_title">Reset Score!</string>
+    <string name="reset_score_message">Are you sure?</string>
+    <string name="yes_title">Yep</string>
+    <string name="no_title">Nope</string>
 
 
 </resources>
