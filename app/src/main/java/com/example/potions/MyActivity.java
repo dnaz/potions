@@ -3,7 +3,6 @@ package com.example.potions;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -66,6 +65,22 @@ public class MyActivity extends Activity {
                     .setPositiveButton(R.string.close_button_title, null)
                     .setNegativeButton(R.string.clear_results_button_title, new ResetListener())
                     .show();
+        } else if (id == R.id.action_reset_player_names_menu) {
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.reset_player_names_title)
+                    .setMessage(getString(R.string.reset_score_message))
+                    .setNegativeButton(R.string.yes_title, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            for (Integer playerId : playerIds) {
+                                ((PlayerView) (findViewById(playerId))).setPlayerName(getString(R.string.default_player_name));
+                            }
+                        }
+                    }
+                    )
+                    .setPositiveButton(R.string.no_title, null)
+                    .show();
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -86,7 +101,7 @@ public class MyActivity extends Activity {
             sb.append(", ");
         }
         sb.delete(sb.length() - 2, sb.length());
-        winnersTextView.setText("Winner(s): " + sb.toString());
+        winnersTextView.setText(getString(R.string.winners_header) + sb.toString());
         return rootLayout;
     }
 
@@ -95,13 +110,13 @@ public class MyActivity extends Activity {
                 .setTitle(R.string.reset_score_dialog_title)
                 .setMessage(getString(R.string.reset_score_message))
                 .setNegativeButton(R.string.yes_title, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        for (Integer playerId : playerIds) {
-                            ((PlayerView) (findViewById(playerId))).resetScore();
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                for (Integer playerId : playerIds) {
+                                    ((PlayerView) (findViewById(playerId))).resetScore();
+                                }
+                            }
                         }
-                    }
-                }
                 )
                 .setPositiveButton(R.string.no_title, null)
                 .show();

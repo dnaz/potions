@@ -7,7 +7,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.text.InputFilter;
-import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,7 @@ public class PlayerView extends RelativeLayout {
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.PlayerView, defStyle, 0);
 
-        mPlayerName = a.getString(R.styleable.PlayerView_playerName) == null ? "player" : a.getString(R.styleable.PlayerView_playerName);
+        mPlayerName = getContext().getString(R.string.default_player_name);
         mPlayerColor = a.getColor(R.styleable.PlayerView_playerColor, mPlayerColor);
         mPlayerFontColor = a.getColor(R.styleable.PlayerView_playerFontColor, mPlayerFontColor);
         mScore = Integer.valueOf(getContext().getString(R.string.default_score));
@@ -76,12 +75,13 @@ public class PlayerView extends RelativeLayout {
         return textView;
     }
 
-    public String getPlayerName() {
-        return mPlayerName;
+    public void setPlayerName(String mPlayerName) {
+        this.mPlayerName = mPlayerName;
+        resetTextView();
     }
 
-    public int getPlayerColor() {
-        return mPlayerColor;
+    public String getPlayerName() {
+        return mPlayerName;
     }
 
     @Override
@@ -89,50 +89,11 @@ public class PlayerView extends RelativeLayout {
         super.onDraw(canvas);
     }
 
-    /**
-     * Gets the example string attribute value.
-     *
-     * @return The example string attribute value.
-     */
-    public String getExampleString() {
-        return mPlayerName;
-    }
-
-    /**
-     * Sets the view's example string attribute value. In the example view, this string
-     * is the text to draw.
-     *
-     * @param exampleString The example string attribute value to use.
-     */
-    public void setExampleString(String exampleString) {
-        mPlayerName = exampleString;
-    }
-
-    /**
-     * Gets the example color attribute value.
-     *
-     * @return The example color attribute value.
-     */
-    public int getExampleColor() {
-        return mPlayerColor;
-    }
-
-    /**
-     * Sets the view's example color attribute value. In the example view, this color
-     * is the font color.
-     *
-     * @param exampleColor The example color attribute value to use.
-     */
-    public void setExampleColor(int exampleColor) {
-        mPlayerColor = exampleColor;
-    }
-
     private void showNegativeScoreAlert() {
         if (!mNegativeScoreAlert.getView().isShown()) {
             mNegativeScoreAlert.show();
         }
     }
-
 
     private void changeScore(View view, int val) {
 

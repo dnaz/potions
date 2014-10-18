@@ -21,6 +21,10 @@
     <string name="no_title">Nope</string>
     <string name="set_player_name_title">Set Player Name</string>
     <string name="ok_button_label">OK</string>
+    <string name="reset_player_names">Reset Players Names</string>
+    <string name="reset_player_names_title">Reset Player Names</string>
+    <string name="default_player_name">Player</string>
+    <string name="winners_header">Winner(s): </string>
 
 
 </resources>
