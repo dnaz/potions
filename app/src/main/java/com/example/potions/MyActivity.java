@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -73,30 +71,22 @@ public class MyActivity extends Activity {
     }
 
     private View buildWinnersView() {
+
         LinearLayout rootLayout = new LinearLayout(this);
         rootLayout.setGravity(Gravity.CENTER);
         rootLayout.setOrientation(LinearLayout.HORIZONTAL);
-        rootLayout.setPadding(0, 30, 0, 0);
 
         TextView winnersTextView = new TextView(this);
-        winnersTextView.setText("Winner(s): ");
         winnersTextView.setTextSize(20);
         rootLayout.addView(winnersTextView);
+        StringBuilder sb = new StringBuilder();
 
-        LinearLayout winnersLayout = new LinearLayout(this);
-        winnersLayout.setOrientation(LinearLayout.HORIZONTAL);
-        winnersLayout.setBackgroundColor(Color.GRAY);
-        for (Integer winnerColor : findWinnerColors()) {
-            TextView textView = new TextView(this);
-            textView.setWidth(32);
-            textView.setHeight(32);
-            textView.setBackgroundResource(R.drawable.backtext);
-
-            textView.setBackgroundColor(winnerColor);
-            winnersLayout.addView(textView);
+        for (String winner : findWinnerNames()) {
+            sb.append(winner);
+            sb.append(", ");
         }
-
-        rootLayout.addView(winnersLayout);
+        sb.delete(sb.length() - 2, sb.length());
+        winnersTextView.setText("Winner(s): " + sb.toString());
         return rootLayout;
     }
 
@@ -118,18 +108,18 @@ public class MyActivity extends Activity {
 
     }
 
-    private List<Integer> findWinnerColors() {
+    private List<String> findWinnerNames() {
 
         List<PlayerView> allPlayerViews = new ArrayList<PlayerView>();
         for (Integer playerId : playerIds) {
             allPlayerViews.add((PlayerView) findViewById(playerId));
         }
         Collections.sort(allPlayerViews, new ScoreComparator());
-        List<Integer> winnerColors = new ArrayList<Integer>();
+        List<String> winnerColors = new ArrayList<String>();
         int maxScore = allPlayerViews.get(0).getScore();
         for (PlayerView playerView : allPlayerViews) {
             if (playerView.getScore() == maxScore) {
-                winnerColors.add(playerView.getPlayerColor());
+                winnerColors.add(playerView.getPlayerName());
             }
         }
 

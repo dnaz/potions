@@ -76,6 +76,10 @@ public class PlayerView extends RelativeLayout {
         return textView;
     }
 
+    public String getPlayerName() {
+        return mPlayerName;
+    }
+
     public int getPlayerColor() {
         return mPlayerColor;
     }
