@@ -10,6 +10,7 @@ import android.text.InputFilter;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -147,12 +148,13 @@ public class PlayerView extends RelativeLayout {
     private class OnTextViewLongClickListenerImpl implements View.OnLongClickListener {
 
         @Override
-        public boolean onLongClick(View view) {
+        public boolean onLongClick(final View view) {
             final EditText editText = new EditText(view.getContext());
             editText.setText(mPlayerName);
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(18)});
             editText.setSelectAllOnFocus(true);
-            new AlertDialog.Builder(view.getContext())
+
+            AlertDialog alertDialog = new AlertDialog.Builder(view.getContext())
                     .setTitle(R.string.set_player_name_title)
                     .setView(editText)
                     .setPositiveButton(R.string.close_button_title, null)
@@ -163,7 +165,26 @@ public class PlayerView extends RelativeLayout {
                             resetTextView();
                         }
                     })
-                    .show();
+                    .create();
+
+            alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                @Override
+                public void onShow(DialogInterface dialogInterface) {
+                    editText.requestFocus();
+                    final InputMethodManager inputMethodManager = (InputMethodManager) view.getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                }
+            });
+            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    final InputMethodManager inputMethodManager = (InputMethodManager) view.getContext()
+                            .getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
+            });
+            alertDialog.show();
             return true;
         }
     }
